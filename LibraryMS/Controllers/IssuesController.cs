@@ -1,25 +1,26 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using LibraryMS.Models;
 using LibraryMS.Data;
+using LibraryMS.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
-public class PublishersController : Controller
+public class IssuesController : Controller
 {
     private readonly LibraryContext _context;
 
-    public PublishersController(LibraryContext context)
+    public IssuesController(LibraryContext context)
     {
         _context = context;
     }
 
-    // GET: PUBLISHERS
+    // GET: ISSUES
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Publisher.ToListAsync());
+        return View(await _context.Issues.ToListAsync());
     }
 
-    // GET: PUBLISHERS/Details/5
+    // GET: ISSUES/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -27,39 +28,49 @@ public class PublishersController : Controller
             return NotFound();
         }
 
-        var publisher = await _context.Publisher
-            .FirstOrDefaultAsync(m => m.PublisherID == id);
-        if (publisher == null)
+        var issue = await _context.Issues
+            .FirstOrDefaultAsync(m => m.IssueID == id);
+        if (issue == null)
         {
             return NotFound();
         }
 
-        return View(publisher);
+        return View(issue);
     }
 
-    // GET: PUBLISHERS/Create
+    // GET: ISSUES/Create
     public IActionResult Create()
     {
+        ViewBag.BookCopies = new SelectList(
+            _context.BookCopies,
+            "CopyID",
+            "Barcode"
+        );
+        ViewBag.Members = new SelectList(
+            _context.Members,
+            "MemberID",
+            "FullName"
+        );
         return View();
     }
 
-    // POST: PUBLISHERS/Create
+    // POST: ISSUES/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("PublisherID,PublisherName")] Publisher publisher)
+    public async Task<IActionResult> Create([Bind("IssueID,MemberID,CopyID,IssueDate,DueDate,ReturnDate,Member,BookCopy")] Issue issue)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(publisher);
+            _context.Add(issue);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(publisher);
+        return View(issue);
     }
 
-    // GET: PUBLISHERS/Edit/5
+    // GET: ISSUES/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -67,22 +78,22 @@ public class PublishersController : Controller
             return NotFound();
         }
 
-        var publisher = await _context.Publisher.FindAsync(id);
-        if (publisher == null)
+        var issue = await _context.Issues.FindAsync(id);
+        if (issue == null)
         {
             return NotFound();
         }
-        return View(publisher);
+        return View(issue);
     }
 
-    // POST: PUBLISHERS/Edit/5
+    // POST: ISSUES/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("PublisherID,PublisherName")] Publisher publisher)
+    public async Task<IActionResult> Edit(int? id, [Bind("IssueID,MemberID,CopyID,IssueDate,DueDate,ReturnDate,Member,BookCopy")] Issue issue)
     {
-        if (id != publisher.PublisherID)
+        if (id != issue.IssueID)
         {
             return NotFound();
         }
@@ -91,12 +102,12 @@ public class PublishersController : Controller
         {
             try
             {
-                _context.Update(publisher);
+                _context.Update(issue);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PublisherExists(publisher.PublisherID))
+                if (!IssueExists(issue.IssueID))
                 {
                     return NotFound();
                 }
@@ -107,10 +118,10 @@ public class PublishersController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(publisher);
+        return View(issue);
     }
 
-    // GET: PUBLISHERS/Delete/5
+    // GET: ISSUES/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -118,33 +129,33 @@ public class PublishersController : Controller
             return NotFound();
         }
 
-        var publisher = await _context.Publisher
-            .FirstOrDefaultAsync(m => m.PublisherID == id);
-        if (publisher == null)
+        var issue = await _context.Issues
+            .FirstOrDefaultAsync(m => m.IssueID == id);
+        if (issue == null)
         {
             return NotFound();
         }
 
-        return View(publisher);
+        return View(issue);
     }
 
-    // POST: PUBLISHERS/Delete/5
+    // POST: ISSUES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var publisher = await _context.Publisher.FindAsync(id);
-        if (publisher != null)
+        var issue = await _context.Issues.FindAsync(id);
+        if (issue != null)
         {
-            _context.Publisher.Remove(publisher);
+            _context.Issues.Remove(issue);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool PublisherExists(int? id)
+    private bool IssueExists(int? id)
     {
-        return _context.Publisher.Any(e => e.PublisherID == id);
+        return _context.Issues.Any(e => e.IssueID == id);
     }
 }

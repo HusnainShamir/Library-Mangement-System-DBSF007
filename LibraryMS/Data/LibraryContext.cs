@@ -17,8 +17,8 @@ namespace LibraryMS.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Publisher> Publisher { get; set; }
-        //public DbSet<BookCopy> BookCopies { get; set; }
-        //public DbSet<Issue> Issues { get; set; }
+        public DbSet<BookCopy> BookCopies { get; set; }
+        public DbSet<Issue> Issues { get; set; }
         //public DbSet<Reservation> Reservations { get; set; }
         //public DbSet<Fine> Fines { get; set; }
         //public DbSet<Payment> Payments { get; set; }

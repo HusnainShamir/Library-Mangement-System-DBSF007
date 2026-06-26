@@ -1,0 +1,71 @@
+@model IEnumerable<LibraryMS.Models.Issue>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CopyID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IssueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookCopy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.MemberID)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CopyID)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.IssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Member)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.BookCopy)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IssueID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IssueID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IssueID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

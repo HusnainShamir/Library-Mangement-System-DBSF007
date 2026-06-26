@@ -1,0 +1,47 @@
+@model IEnumerable<LibraryMS.Models.BookCopy>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.BookID)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CopyID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CopyID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CopyID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

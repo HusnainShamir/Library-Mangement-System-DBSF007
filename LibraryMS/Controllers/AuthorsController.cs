@@ -20,15 +20,15 @@ public class AuthorsController : Controller
     }
 
     // GET: AUTHORS/Details/5
-    public async Task<IActionResult> Details(int? authorid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (authorid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var author = await _context.Authors
-            .FirstOrDefaultAsync(m => m.AuthorID == authorid);
+            .FirstOrDefaultAsync(m => m.AuthorID == id);
         if (author == null)
         {
             return NotFound();
@@ -60,14 +60,14 @@ public class AuthorsController : Controller
     }
 
     // GET: AUTHORS/Edit/5
-    public async Task<IActionResult> Edit(int? authorid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (authorid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var author = await _context.Authors.FindAsync(authorid);
+        var author = await _context.Authors.FindAsync(id);
         if (author == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class AuthorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? authorid, [Bind("AuthorID,AuthorName")] Author author)
+    public async Task<IActionResult> Edit(int? id, [Bind("AuthorID,AuthorName")] Author author)
     {
-        if (authorid != author.AuthorID)
+        if (id != author.AuthorID)
         {
             return NotFound();
         }
@@ -111,15 +111,15 @@ public class AuthorsController : Controller
     }
 
     // GET: AUTHORS/Delete/5
-    public async Task<IActionResult> Delete(int? authorid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (authorid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var author = await _context.Authors
-            .FirstOrDefaultAsync(m => m.AuthorID == authorid);
+            .FirstOrDefaultAsync(m => m.AuthorID == id);
         if (author == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class AuthorsController : Controller
     // POST: AUTHORS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? authorid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var author = await _context.Authors.FindAsync(authorid);
+        var author = await _context.Authors.FindAsync(id);
         if (author != null)
         {
             _context.Authors.Remove(author);
@@ -143,8 +143,8 @@ public class AuthorsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool AuthorExists(int? authorid)
+    private bool AuthorExists(int? id)
     {
-        return _context.Authors.Any(e => e.AuthorID == authorid);
+        return _context.Authors.Any(e => e.AuthorID == id);
     }
 }

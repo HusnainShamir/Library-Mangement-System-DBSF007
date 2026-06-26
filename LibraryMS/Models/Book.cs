@@ -11,5 +11,6 @@
 
         public Category? Category { get; set; }
         public Publisher? Publisher { get; set; }
+        public ICollection<BookCopy>? BookCopies { get; set; }
     }
 }

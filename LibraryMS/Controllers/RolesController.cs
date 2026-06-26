@@ -20,15 +20,15 @@ public class RolesController : Controller
     }
 
     // GET: ROLES/Details/5
-    public async Task<IActionResult> Details(int? roleid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (roleid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var role = await _context.Roles
-            .FirstOrDefaultAsync(m => m.RoleID == roleid);
+            .FirstOrDefaultAsync(m => m.RoleID == id);
         if (role == null)
         {
             return NotFound();
@@ -60,14 +60,14 @@ public class RolesController : Controller
     }
 
     // GET: ROLES/Edit/5
-    public async Task<IActionResult> Edit(int? roleid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (roleid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var role = await _context.Roles.FindAsync(roleid);
+        var role = await _context.Roles.FindAsync(id);
         if (role == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class RolesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? roleid, [Bind("RoleID,RoleName")] Role role)
+    public async Task<IActionResult> Edit(int? id, [Bind("RoleID,RoleName")] Role role)
     {
-        if (roleid != role.RoleID)
+        if (id != role.RoleID)
         {
             return NotFound();
         }
@@ -111,15 +111,15 @@ public class RolesController : Controller
     }
 
     // GET: ROLES/Delete/5
-    public async Task<IActionResult> Delete(int? roleid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (roleid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var role = await _context.Roles
-            .FirstOrDefaultAsync(m => m.RoleID == roleid);
+            .FirstOrDefaultAsync(m => m.RoleID == id);
         if (role == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class RolesController : Controller
     // POST: ROLES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? roleid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var role = await _context.Roles.FindAsync(roleid);
+        var role = await _context.Roles.FindAsync(id);
         if (role != null)
         {
             _context.Roles.Remove(role);
@@ -143,8 +143,8 @@ public class RolesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool RoleExists(int? roleid)
+    private bool RoleExists(int? id)
     {
-        return _context.Roles.Any(e => e.RoleID == roleid);
+        return _context.Roles.Any(e => e.RoleID == id);
     }
 }
